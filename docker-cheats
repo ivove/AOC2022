@@ -1,0 +1,8 @@
+docker-compose exec iris iris session iris
+
+docker-compose up -d
+
+docker-compose down
+
+
+docker exec -it aoc2022 iris session IRIS

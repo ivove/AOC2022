@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  iris:
+    container_name: aoc2022
+    init: true
+    image: containers.intersystems.com/intersystems/iris-community:2022.1.0.209.0
+    cpuset: "0-3"
+    restart: always
+    command: --check-caps false
+    ports:
+     - 9092:52773
+     - 9091:1972
+    volumes:
+      - ./:/irisdev/app
+      - ./shared:/shared
+      - ./src:/src
