@@ -94,8 +94,8 @@ Method Part2(max As %Integer) As %Integer
 
     set freeX = 0
     set freeY = 0
-    for x=0:1:max {
-        for y=0:1:max {
+    for y=0:1:max {
+        for x=0:1:max {
             set fnd = 0
             if ('$DATA(map(y,x))) {
                 set sx = $ORDER(sensors(""))
@@ -104,18 +104,22 @@ Method Part2(max As %Integer) As %Integer
                     while ('fnd && (sy '= "")) {
                         set bdst = $ZABS(sx - $LIST(beacon,1)) + $ZABS(sy - $LIST(beacon,2))
                         set tdxt = $ZABS(x - sx) + $ZABS(y - sy)
-                        if (tdxt <= bdst) { 
+                        if (tdxt > bdst) { 
                             set fnd = 1 
                             set freeX = x
-                            set freeY = y                            
-                            write "found",*9,x,*9,y,!
+                            set freeY = y       
+                            //write "found",*9,x,*9,y,!
                         }
                         set sy = $ORDER(sensors(sx,sy),1,beacon)
                     }
                     set sx = $ORDER(sensors(sx))
                 }
+                    i fnd { w "#" }
+                    else { w "." }
             }
+            else { w map(y,x) }
         }
+        w !
     }
     w freeX,*9,freeY,!
     Return ((freeX * 4000000) + freeY)
